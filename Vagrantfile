@@ -73,6 +73,10 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y bind9
+    apt-get install dnsutils
     cp -v /vagrant/named /etc/default 
+    cp -v /vagrant/named.conf.options /etc/bind/named.conf.options
+    cp -v /vagrant/named.conf.local /etc/bind/named.conf.local
+    systemctl restart bind9
   SHELL
 end
