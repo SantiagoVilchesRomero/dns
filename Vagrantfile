@@ -18,7 +18,6 @@ Vagrant.configure("2") do |config|
   config.vm.define "mercurio" do |mercurio|
     mercurio.vm.hostname = "mercurio.sistema.sol"
     mercurio.vm.network "private_network", ip: "192.168.57.101"
-    mercurio.vm.provision "shell", path: "mercurio.sh"
   end
 
   config.vm.define "venus" do |venus|
