@@ -13,6 +13,24 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "debian/bullseye64"
+  config.vm.network "public_network"
+
+  config.vm.define "mercurio" do |mercurio|
+    mercurio.vm.hostname = "mercurio.sistema.sol"
+    mercurio.vm.network "private_network", ip: "192.168.57.101"
+    mercurio.vm.provision "shell", path: "mercurio.sh"
+  end
+
+  config.vm.define "venus" do |venus|
+    venus.vm.hostname = "venus.sistema.sol"
+    venus.vm.network "private_network", ip: "192.168.57.102"
+    venus.vm.provision "shell", path: "venus.sh"
+  end
+
+  config.vm.define "tierra" do |tierra|
+    tierra.vm.hostname = "tierra.sistema.sol"
+    tierra.vm.network "private_network", ip: "192.168.57.103"
+    tierra.vm.provision "shell", path: "tierra.sh"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -32,7 +50,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.15"
+  # config.vm.network "private_network", ip: "192.168.33.15"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -70,13 +88,13 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    apt-get update
-    apt-get install -y bind9
-    apt-get install dnsutils
-    cp -v /vagrant/named /etc/default 
-    cp -v /vagrant/named.conf.options /etc/bind/named.conf.options
-    cp -v /vagrant/named.conf.local /etc/bind/named.conf.local
-    systemctl restart bind9
-  SHELL
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y bind9
+  #   apt-get install dnsutils
+  #   cp -v /vagrant/named /etc/default 
+  #   cp -v /vagrant/named.conf.options /etc/bind/named.conf.options
+  #   cp -v /vagrant/named.conf.local /etc/bind/named.conf.local
+  #   systemctl restart bind9
+  # SHELL
 end
